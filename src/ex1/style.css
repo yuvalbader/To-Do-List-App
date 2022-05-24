@@ -1,5 +1,8 @@
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-image: linear-gradient(45deg, white, lightgreen, darkblue);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .app-container {
@@ -40,7 +43,6 @@ body {
   margin: 0 auto;
   border-radius: 2px;
   padding: 1.4rem 2rem 1.6rem;
-  background: rgba(57, 63, 84, 0.8);
 }
 
 .todo-list {
@@ -57,7 +59,7 @@ body {
   line-height: 45px;
   margin-bottom: 8px;
 
-  background-color: #57e6e6;
+  background-color: rgb(174, 236, 162, 1);
   border-radius: 3px;
   padding: 0 15px;
   cursor: default;
@@ -86,15 +88,7 @@ body {
 }
 
 .todo-list li:hover {
-  background: linear-gradient(
-    to right,
-    #b294ff,
-    #57e6e6,
-    #feffb8,
-    #57e6e6,
-    #b294ff,
-    #57e6e6
-  );
+  background: linear-gradient(45deg, white, lightgreen, darkblue);
   background-size: 500% auto;
   animation: gradient 3s linear infinite;
   cursor: pointer;
@@ -123,19 +117,11 @@ body {
   right: 0px;
   bottom: 0px;
   z-index: 999;
-  height: 2px;
+  height: 10px;
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
   background-position: 0% 0%;
-  background: linear-gradient(
-    to right,
-    #b294ff,
-    #57e6e6,
-    #feffb8,
-    #57e6e6,
-    #b294ff,
-    #57e6e6
-  );
+  background: linear-gradient(45deg, darkblue, lightgreen, darkblue);
   background-size: 500% auto;
   animation: gradient 3s linear infinite;
 }
@@ -162,7 +148,8 @@ body {
 }
 
 .add-new-container button:hover {
-  color: #bfd2ff;
+  color: darkblue;
+  cursor: pointer;
 }
 
 .todo-list {

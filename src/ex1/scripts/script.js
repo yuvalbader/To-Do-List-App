@@ -1,16 +1,12 @@
+import ItemManager from "./ItemManager.js";
+import Task from "./Task.js";
+
 const inputBox = document.querySelector(".add-new-input");
 const addTaskBtn = document.querySelector(".add-new-button");
 const todoList = document.querySelector(".todo-list");
 const pendingTasks = document.querySelector(".pending-tasks");
 
-//Get the todo list from local storage.
-let userTasks = loadTasksFromLocalStorage();
-
-//This function returns the array that is in the local storage.
-//If there is nothing in it it returns an empty array.
-function loadTasksFromLocalStorage() {
-  return Array.from(JSON.parse(localStorage.getItem("tasks")) || []);
-}
+const tasksManager = new ItemManager();
 
 //This function returns a string of the current time and date.
 // For each task I save a field of when it was added.
@@ -45,40 +41,27 @@ addTaskBtn.onclick = () => {
   if (userValue === "") {
     alert("Please enter a valid input");
   } else {
-    userTasks.push({
-      task: userValue,
-      date: getNowTime(),
-    });
+    tasksManager.addItem(new Task(userValue, getNowTime(), false));
 
     inputBox.value = "";
     todoList.innerHTML = "";
-
-    //Update of the list stored in local storage to the new list (after we added a new task)
-    localStorage.setItem(
-      "tasks",
-      JSON.stringify([
-        ...JSON.parse(localStorage.getItem("tasks") || "[]"),
-        { task: userValue, date: getNowTime() }, // completed: false },
-      ])
-    );
 
     showTasks();
   }
 };
 
 function deleteTask() {
-  userTasks.splice(this.parentElement.id, 1);
-  localStorage.setItem("tasks", JSON.stringify(userTasks));
+  tasksManager.removeItem(this.parentElement.id);
   todoList.innerHTML = "";
   showTasks();
 }
 
 function taskClicked() {
-  alert(`you clicked on ${userTasks[this.id].task}`);
+  alert(`you clicked on ${tasksManager.items[this.id].task}`);
 }
 
 function showTasks() {
-  userTasks.forEach((value, index) => {
+  tasksManager.items.forEach((value, index) => {
     //Create all the html elements to be added to the list
     const listItem = document.createElement("li");
     const span = document.createElement("span");
@@ -108,9 +91,9 @@ function showTasks() {
   });
 
   pendingTasks.innerText =
-    userTasks.length == 0
+    tasksManager.items.length == 0
       ? `You don't have pending tasks`
-      : `You have a ${userTasks.length} pending tasks`;
+      : `You have a ${tasksManager.items.length} pending tasks`;
 }
 
 showTasks();
