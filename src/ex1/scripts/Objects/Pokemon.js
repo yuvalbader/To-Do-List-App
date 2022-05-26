@@ -1,11 +1,12 @@
 export default class Pokemon {
-  constructor(name, id) {
+  constructor(name, id, type) {
     this.name = name;
     this.id = id;
+    this.type = type;
     this.task = this.createPokemonTask();
   }
 
   createPokemonTask() {
-    return `catch ${this.name}`;
+    return `Catch ${this.name} (${this.type} pokemon) `;
   }
 }

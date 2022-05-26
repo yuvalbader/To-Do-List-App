@@ -9,10 +9,14 @@ export default class PokemonClient {
     const pokemons = await Promise.all(
       pokemonsArr.map(async (id) => {
         const response = await fetch(`${this.baseUrl}${id}`);
-        return response.json();
+        if (response.ok) {
+          return response.json();
+        } else {
+          return id;
+        }
       })
     ).catch((e) => {
-      throw e;
+      console.log(e);
     });
     return pokemons;
   }

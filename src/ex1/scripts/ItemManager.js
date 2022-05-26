@@ -23,10 +23,18 @@ export default class ItemManager {
   }
 
   loadItemsFromLocalStorage() {
-    return Array.from(JSON.parse(localStorage.getItem("items")) || []);
+    try {
+      return Array.from(JSON.parse(localStorage.getItem("items")));
+    } catch (e) {
+      return [];
+    }
   }
 
   getItems() {
     return this.itemsArr;
+  }
+
+  deleteAllItems() {
+    this.itemsArr = [];
   }
 }

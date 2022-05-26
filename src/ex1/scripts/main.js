@@ -1,8 +1,8 @@
 import ListRender from "./ListRender.js";
 import ItemManager from "./ItemManager.js";
-import Task from "./Task.js";
+import Task from "./Objects/Task.js";
 import PokemonClient from "./PokemonClient.js";
-import Pokemon from "./Pokemon.js";
+import Pokemon from "./Objects/Pokemon.js";
 
 class Main {
   constructor() {
@@ -14,6 +14,7 @@ class Main {
     this.pokemonFetcher = new PokemonClient();
     this.inputBox = document.querySelector(".add-new-input");
     this.addTaskBtn = document.querySelector(".add-new-button");
+    this.deleteAllTasksBtn = document.querySelector(".delete-all-tasks");
   }
 
   init() {
@@ -39,6 +40,7 @@ class Main {
           this.tasksManager.addItem(
             new Task(userValue, this.getNowTime(), false)
           );
+          this.inputBox.value = "";
           this.ListRender.renderList(this.tasksManager.getItems());
         }
       }
@@ -49,14 +51,32 @@ class Main {
         this.addTaskBtn.click();
       }
     });
+
+    this.deleteAllTasksBtn.addEventListener("click", () => {
+      this.tasksManager.deleteAllItems();
+      this.ListRender.renderList(this.tasksManager.getItems());
+    });
   }
 
   addPokemonsToList(pokemons) {
-    console.log(pokemons);
     pokemons.forEach((pokemon) => {
-      this.tasksManager.addItem(new Pokemon(pokemon.name, pokemon.id));
+      if (pokemon.name) {
+        this.tasksManager.addItem(
+          new Pokemon(pokemon.name, pokemon.id, pokemon.types[0].type.name)
+        );
+      } else {
+        this.tasksManager.addItem(
+          new Task(
+            `Pokemon with ID ${pokemon} was not found`,
+            this.getNowTime(),
+            false
+          )
+        );
+      }
     });
   }
+
+  pokemonAlreadyExist(pokemon) {}
 
   createPokemonNotFoundMsg(pokemonId) {
     return `Pokemon with ID ${pokemonId} was not found`;

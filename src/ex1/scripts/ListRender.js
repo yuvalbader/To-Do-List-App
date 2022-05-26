@@ -15,10 +15,10 @@ export default class ListRender {
       this.todoList.appendChild(listItem);
     });
 
-    // this.pendingTasks.innerText =
-    //   listToRender.items.length == 0
-    //     ? `You don't have pending tasks`
-    //     : `You have a ${listToRender.items.length} pending tasks`;
+    this.pendingTasks.innerText =
+      listToRender.length == 0
+        ? `You don't have pending tasks`
+        : `You have a ${listToRender.length} pending tasks`;
   }
 
   taskClicked(index) {
