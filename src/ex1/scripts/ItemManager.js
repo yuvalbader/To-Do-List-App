@@ -36,5 +36,6 @@ export default class ItemManager {
 
   deleteAllItems() {
     this.itemsArr = [];
+    localStorage.setItem("items", []);
   }
 }

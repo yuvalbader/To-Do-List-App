@@ -18,7 +18,7 @@ export default class ListRender {
     this.pendingTasks.innerText =
       listToRender.length == 0
         ? `You don't have pending tasks`
-        : `You have a ${listToRender.length} pending tasks`;
+        : `You have ${listToRender.length} pending tasks`;
   }
 
   taskClicked(index) {
