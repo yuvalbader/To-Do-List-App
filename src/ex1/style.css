@@ -96,9 +96,19 @@ body {
 
 .todo-list-item button {
   width: 10%;
+  color: #7881a1;
+  font-size: xx-large;
+  line-height: 2.4rem;
+  vertical-align: middle;
+  transition: color 0.25s;
+  padding: 0;
+  background: none;
+  border: none;
+  outline: none;
 }
 .todo-list-item button:hover {
   cursor: pointer;
+  color: red;
 }
 .add-new-container input {
   flex-grow: 1;

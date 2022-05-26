@@ -1,11 +1,12 @@
 export default class ItemManager {
   constructor() {
     {
-      this.items = this.loadItemsFromLocalStorage();
+      this.itemsArr = this.loadItemsFromLocalStorage();
     }
   }
+
   addItem(itemToAdd) {
-    this.items.push(itemToAdd);
+    this.itemsArr.push(itemToAdd);
     localStorage.setItem(
       "items",
       JSON.stringify([
@@ -15,9 +16,10 @@ export default class ItemManager {
     );
   }
 
-  removeItem(itemToRemoveIdx) {
-    this.items.splice(itemToRemoveIdx, 1);
-    localStorage.setItem("items", JSON.stringify(this.items));
+  removeItem(itemToRemove) {
+    const index = itemToRemove;
+    this.itemsArr.splice(index, 1);
+    localStorage.setItem("items", JSON.stringify(this.itemsArr));
   }
 
   loadItemsFromLocalStorage() {
@@ -25,6 +27,6 @@ export default class ItemManager {
   }
 
   getItems() {
-    return this.items;
+    return this.itemsArr;
   }
 }
