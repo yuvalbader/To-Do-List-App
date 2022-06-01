@@ -1,4 +1,4 @@
-export default class PokemonClient {
+class PokemonClient {
   constructor() {
     {
       https: this.baseUrl = "https://pokeapi.co/api/v2/pokemon/";
@@ -21,3 +21,5 @@ export default class PokemonClient {
     return pokemons;
   }
 }
+
+module.exports = { PokemonClient, fetchPokemonsById };
