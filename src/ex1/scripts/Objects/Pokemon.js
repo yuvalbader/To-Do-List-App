@@ -1,4 +1,4 @@
-export default class Pokemon {
+class Pokemon {
   constructor(name, id, type) {
     this.name = name;
     this.id = id;
@@ -10,3 +10,5 @@ export default class Pokemon {
     return `Catch ${this.name} (${this.type} pokemon) `;
   }
 }
+
+module.exports = { Pokemon };

@@ -1,4 +1,6 @@
-class PokemonClient {
+import fetch from "node-fetch";
+
+export class PokemonClient {
   constructor() {
     {
       https: this.baseUrl = "https://pokeapi.co/api/v2/pokemon/";
@@ -21,5 +23,3 @@ class PokemonClient {
     return pokemons;
   }
 }
-
-module.exports = { PokemonClient, fetchPokemonsById };

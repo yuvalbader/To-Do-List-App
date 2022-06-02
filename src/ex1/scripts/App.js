@@ -1,7 +1,7 @@
 import ListRender from "./ListRender.js";
 import ItemManager from "./ItemManager.js";
-import Task from "./Objects/Task.js";
-import PokemonClient from "./Services/PokemonClient.js";
+import Task from "./Objects/Task.mjs";
+import PokemonClient from "./Services/PokemonClient.mjs";
 import Pokemon from "./Objects/Pokemon.js";
 
 export default class App {
