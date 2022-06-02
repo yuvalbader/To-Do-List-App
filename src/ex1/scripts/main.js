@@ -1,6 +1,4 @@
 
-import App from "./App.js";
-
 class Main {
   constructor() {
     this.app = new App();

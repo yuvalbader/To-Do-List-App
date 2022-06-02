@@ -1,10 +1,10 @@
-import ListRender from "./ListRender.js";
-import ItemManager from "./ItemManager.js";
-import Task from "./Objects/Task.js";
-import PokemonClient from "./Services/PokemonClient.js";
-import Pokemon from "./Objects/Pokemon.js";
+// import ListRender from "./ListRender.js";
+// import ItemManager from "./ItemManager.js";
+// import Task from "./Objects/Task.js";
+// import PokemonClient from "./Services/PokemonClient.js";
+// import Pokemon from "./Objects/Pokemon.js";
 
-export default class App {
+class App {
   constructor() {
     this.tasksManager = new ItemManager();
     this.ListRender = new ListRender(

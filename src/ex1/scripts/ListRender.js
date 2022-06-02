@@ -1,6 +1,6 @@
-import ItemManager from "./ItemManager.js";
+// import ItemManager from "./ItemManager.js";
 
-export default class ListRender {
+class ListRender {
   constructor(manager, tasks) {
     this.todoList = document.querySelector(".todo-list");
     this.pendingTasks = document.querySelector(".pending-tasks");
@@ -22,7 +22,6 @@ export default class ListRender {
   }
 
   taskClicked(index) {
-    console.log(this.manager.getItems()[index].task);
     alert(`you clicked on ${this.manager.getItems()[index].task}`);
   }
 

@@ -1,4 +1,4 @@
-export default class Task {
+class Task {
   constructor(task, dateCreated, checked) {
     {
       this.task = task;

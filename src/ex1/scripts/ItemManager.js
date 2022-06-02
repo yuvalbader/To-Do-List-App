@@ -1,4 +1,4 @@
-export default class ItemManager {
+class ItemManager {
   constructor() {
     {
       this.itemsArr = this.loadItemsFromLocalStorage();
