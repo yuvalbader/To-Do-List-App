@@ -1,15 +1,13 @@
-
 export default class ListRender {
-  constructor(manager, tasks) {
+  constructor(manager) {
+    this.manager = manager;
     this.todoList = document.querySelector(".todo-list");
     this.pendingTasks = document.querySelector(".pending-tasks");
-    this.tasksList = tasks;
-    this.manager = manager;
   }
 
   renderList(listToRender) {
     this.todoList.innerHTML = "";
-    listToRender.forEach((value, index) => {
+    listToRender.map((value, index) => {
       const listItem = this.renderListItem(value, index);
       this.todoList.appendChild(listItem);
     });
@@ -20,8 +18,9 @@ export default class ListRender {
         : `You have ${listToRender.length} pending tasks`;
   }
 
-  taskClicked(index) {
-    alert(`you clicked on ${this.manager.getItems()[index].task}`);
+  async taskClicked(index) {
+    const tasks = await this.manager.getAllTasks();
+    alert(`you clicked on ${tasks[index].task}`);
   }
 
   renderListItem(value, index) {
@@ -43,9 +42,10 @@ export default class ListRender {
     task.innerText = value.task;
     deleteIcon.name = "trash-outline";
 
-    deleteBtn.onclick = () => {
-      this.manager.removeItem(deleteBtn.id);
-      this.renderList(this.manager.getItems());
+    deleteBtn.onclick = async () => {
+      await this.manager.deleteTask(deleteBtn.id);
+      const tasks = await this.manager.getAllTasks();
+      this.renderList(tasks);
     };
 
     task.onclick = () => {

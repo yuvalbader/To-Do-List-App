@@ -112,7 +112,6 @@ program
 
 program.parse();
 
-
 const addPokemonsToList = async (pokemons) => {
   pokemons.forEach((pokemon) => {
     if (pokemon.name) {

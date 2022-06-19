@@ -1,17 +1,14 @@
 import ListRender from "./ListRender.js";
 import ItemManager from "./ItemManager.js";
-import Task from "./Objects/Task.mjs";
-import PokemonClient from "./Services/PokemonClient.mjs";
-import Pokemon from "./Objects/Pokemon.js";
 
 export default class App {
   constructor() {
+    alert("App cons");
     this.tasksManager = new ItemManager();
     this.ListRender = new ListRender(
       this.tasksManager,
-      this.tasksManager.getItems()
+      this.tasksManager.getAllItems()
     );
-    this.pokemonFetcher = new PokemonClient();
     this.inputBox = document.querySelector(".add-new-input");
     this.addTaskBtn = document.querySelector(".add-new-button");
     this.deleteAllTasksBtn = document.querySelector(".delete-all-tasks");

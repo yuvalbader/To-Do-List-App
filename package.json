@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "name": "monday-u-ex01",
+  "description": "Welcome to monday-u official github repository! We are very excited to have you here!   This is going to be so much fun! Here are a few general details:",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuvalbader/monday-u-ex01.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yuvalbader/monday-u-ex01/issues"
+  },
+  "homepage": "https://github.com/yuvalbader/monday-u-ex01#readme"
+}

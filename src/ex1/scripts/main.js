@@ -1,5 +1,4 @@
-
-import App from "./App.js";
+import App from "./";
 
 class Main {
   constructor() {
@@ -13,5 +12,7 @@ class Main {
 const main = new Main();
 
 document.addEventListener("DOMContentLoaded", function () {
+  alert("Main init");
+
   main.init();
 });
