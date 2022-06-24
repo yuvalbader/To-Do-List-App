@@ -15,14 +15,18 @@ class Main {
     this.ListRender.renderList(items);
   }
 
-  init() {
-    this.printList();
+  async init() {
+    await this.printList();
 
     this.addTaskBtn.addEventListener("click", async () => {
-      let userValue = this.inputBox.value;
-      this.inputBox.value = "";
-      await this.ItemClient.addTask(userValue);
-      this.printList();
+      try {
+        let userValue = this.inputBox.value;
+        this.inputBox.value = "";
+        await this.ItemClient.addTask(userValue);
+        await this.printList();
+      } catch (e) {
+        alert(e);
+      }
     });
 
     this.inputBox.addEventListener("keypress", (event) => {
@@ -31,9 +35,9 @@ class Main {
       }
     });
 
-    this.deleteAllTasksBtn.addEventListener("click", () => {
+    this.deleteAllTasksBtn.addEventListener("click", async () => {
       this.ItemClient.deleteAllItems();
-      this.printList();
+      await this.printList();
     });
   }
 }

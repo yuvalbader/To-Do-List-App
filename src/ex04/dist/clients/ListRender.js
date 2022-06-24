@@ -5,7 +5,7 @@ export default class ListRender {
     this.pendingTasks = document.querySelector(".pending-tasks");
   }
 
-  renderList(listToRender) {
+  async renderList(listToRender) {
     this.todoList.innerHTML = "";
     listToRender.map((value, index) => {
       const listItem = this.renderListItem(value, index);
@@ -20,40 +20,57 @@ export default class ListRender {
 
   async taskClicked(index) {
     const tasks = await this.manager.getAllTasks();
-    alert(`you clicked on ${tasks[index].task}`);
+    alert(`you clicked on ${tasks[index].taskContent}`);
   }
 
-  renderListItem(value, index) {
-    //Create all the html elements to be added to the list
+  renderListItem(item, index) {
     const listItem = document.createElement("li");
     const span = document.createElement("span");
     const task = document.createElement("Text");
     const deleteBtn = document.createElement("button");
     const deleteIcon = document.createElement("ion-icon");
 
-    //Define a class for the elements we have created to get the required design
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.classList.add("checkbox");
+    checkbox.checked = item.isDone;
+
+    const toggleTaskDoneClass = () => {
+      if (checkbox.checked) {
+        task.classList.add("done");
+      } else {
+        task.classList.remove("done");
+      }
+    };
+
+    toggleTaskDoneClass();
+
+    checkbox.addEventListener("change", async () => {
+      await this.manager.checboxClicked(item.id);
+      toggleTaskDoneClass();
+    });
+
     listItem.classList.add("todo-list-item");
     deleteBtn.classList.add("delete-task-btn");
-    deleteBtn.id = index;
+    deleteBtn.id = item.id;
 
-    //Setting the id to be the index in the array.
-    //In this way the delete function will have access to the index.
-    task.id = index;
-    task.innerText = value.task;
+    task.id = item.id;
+    task.innerText = item.taskContent;
     deleteIcon.name = "trash-outline";
 
     deleteBtn.onclick = async () => {
-      await this.manager.deleteTask(deleteBtn.id);
+      await this.manager.deleteTask(item.id);
       const tasks = await this.manager.getAllTasks();
       this.renderList(tasks);
     };
 
     task.onclick = () => {
-      this.taskClicked(deleteBtn.id);
+      this.taskClicked(index);
     };
 
     //Building the elements tree hierarchically
     deleteBtn.appendChild(deleteIcon);
+    span.appendChild(checkbox);
     span.appendChild(task);
     span.appendChild(deleteBtn);
     listItem.appendChild(span);

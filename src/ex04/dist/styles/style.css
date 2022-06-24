@@ -5,6 +5,15 @@ body {
   background-size: cover;
 }
 
+.done {
+  text-decoration: line-through;
+}
+
+.checkbox {
+  margin: auto;
+  margin-right: 15px;
+}
+
 .app-container {
   background: whitesmoke;
   max-width: 600px;

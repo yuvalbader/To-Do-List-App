@@ -13,6 +13,23 @@ class ItemClient {
     }
   }
 
+  async getTasksByStatus(status) {
+    try {
+      const endpoint = "";
+
+      if (status === "Done") {
+        endpoint = `${this.API_BASE}/getDoneTasks`;
+      } else if (status === "UnDone") {
+        endpoint = `${this.API_BASE}/getUnDoneTasks`;
+      }
+      const tasks = await fetch(endpoint);
+      const response = await tasks.json();
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   async addTask(taskContent) {
     try {
       const response = await fetch(`${this.API_BASE}/addTask`, {
@@ -20,12 +37,15 @@ class ItemClient {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ item: taskContent }),
       });
+      if (response.status !== 200) {
+        throw new Error("Task already exists");
+      }
     } catch (e) {
-      console.log(e);
+      throw e;
     }
   }
 
-  async deleteTask(taskToDelete) {
+  async deleteTask(taskId) {
     try {
       await fetch(`${this.API_BASE}/deleteTask`, {
         method: "DELETE",
@@ -33,7 +53,22 @@ class ItemClient {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ taskToDelete: taskToDelete }),
+        body: JSON.stringify({ taskId: taskId }),
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async checboxClicked(taskId) {
+    try {
+      await fetch(`${this.API_BASE}/checboxClicked`, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ taskId: taskId, doneTimestamp: new Date() }),
       });
     } catch (e) {
       console.log(e);
