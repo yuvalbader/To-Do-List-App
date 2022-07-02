@@ -1,5 +1,6 @@
-import React, { Component, useEffect } from "react";
+import React from "react";
 import { Avatar } from "monday-ui-react-core";
+import PropTypes from "prop-types";
 
 import "../../components/ListItem/ListItem.css";
 
@@ -17,7 +18,7 @@ export default function ListItem({
         type={Avatar.types.IMG}
       ></Avatar>
       <h6
-        className={`mt-1 mb-0 align-middle ${
+        className={`test   ${
           item.isDone ? "completed-task" : ""
         }`}
       >
@@ -36,7 +37,7 @@ export default function ListItem({
             }`}
           />
         </span>
-        <span className="mx-2 text-warning" onClick={() => handleEdit}>
+        <span className="mx-2 text-warning" onClick={() => handleEdit()}>
           <i className="fas fa-pen" />
         </span>
         <span
@@ -49,3 +50,10 @@ export default function ListItem({
     </li>
   );
 }
+
+ListItem.propTypes = {
+  item: PropTypes.object.isRequired,
+  handleDoneTask: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  handleEdit: PropTypes.func.isRequired,
+};

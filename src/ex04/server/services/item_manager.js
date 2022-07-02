@@ -122,7 +122,7 @@ class ItemManager {
         await this.addItem({
           task: `Pokemon with ID ${pokemonId} was not found`,
           isDone: false,
-          imgUrl: null,
+          imgUrl: img,
         });
       } else {
         throw error;

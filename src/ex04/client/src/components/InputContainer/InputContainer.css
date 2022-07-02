@@ -1,5 +1,4 @@
-.add-new-container,
-.todo-list {
+.add-new-container {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -10,7 +9,7 @@
   padding: 1.4rem 2rem 1.6rem;
 }
 
-.add-new-container input {
+input {
   flex-grow: 1;
   color: #00b09b;
   font-size: 1.8rem;

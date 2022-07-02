@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ListItem from "../ListItem/ListItem";
 import "../TodoList/TodoList.css";
+import PropTypes from "prop-types";
 
 export default function TodoList({
   items,
@@ -22,6 +23,18 @@ export default function TodoList({
           />
         ))}
       </ul>
+      <label className="pending-tasks">
+        {items.length === 0
+          ? "You don't have pending tasks"
+          : `You have ${items.length} tasks`}
+      </label>
     </div>
   );
 }
+
+TodoList.prototype = {
+  items: PropTypes.array.isRequired,
+  handleDoneTask: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  handleEdit: PropTypes.func.isRequired,
+};

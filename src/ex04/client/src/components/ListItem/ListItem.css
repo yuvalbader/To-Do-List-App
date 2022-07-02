@@ -1,24 +1,3 @@
-body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-image: linear-gradient(to bottom, #00b09b, #96c93d);
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.done {
-  text-decoration: line-through;
-}
-
-.checkbox {
-  margin: auto;
-  margin-right: 15px;
-}
-
-.todo-list-container {
-  display: flex;
-  flex-direction: column;
-}
-
 .app-container h1,
 .pending-tasks {
   font-family: "Russo One", sans-serif;
@@ -32,6 +11,8 @@ body {
 .pending-tasks {
   font-size: large;
   margin-left: 19%;
+  margin-top: 80px;
+  margin-left: 240px;
 }
 
 .todo-list-item text {
@@ -71,6 +52,9 @@ body {
   padding: 0 15px;
   cursor: default;
   border-radius: 5px;
+  align-items: middle;
+  margin-right: 150px;
+  margin-top: revert;
 }
 
 .delete-task-btn {
@@ -80,19 +64,6 @@ body {
   margin-top: 10px;
 }
 
-.todo-list-item span {
-  margin-right: 5px;
-  display: flex;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.todo-list-item text {
-  width: 90%;
-  word-wrap: break-word;
-}
-
 .todo-list li:hover {
   background: linear-gradient(45deg, white, lightgreen, darkblue);
   background-size: 500% auto;
@@ -100,22 +71,6 @@ body {
   cursor: pointer;
 }
 
-.todo-list-item button {
-  width: 10%;
-  color: #7881a1;
-  font-size: xx-large;
-  line-height: 2.4rem;
-  vertical-align: middle;
-  transition: color 0.25s;
-  padding: 0;
-  background: none;
-  border: none;
-  outline: none;
-}
-.todo-list-item button:hover {
-  cursor: pointer;
-  color: rgb(235, 50, 35);
-}
 .add-new-container input {
   flex-grow: 1;
   color: #00b09b;
@@ -160,4 +115,12 @@ body {
 .todo-list {
   overflow: auto;
   max-height: 260px;
+}
+
+.todo-list-item {
+  margin-top: 10;
+  margin-bottom: 10;
+  align-items: middle;
+  margin-right: 150px;
+  margin-top: revert;
 }

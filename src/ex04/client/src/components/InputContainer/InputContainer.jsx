@@ -1,34 +1,45 @@
 import React, { useState } from "react";
 import "./InputContainer.css";
 import "./pokeball.css";
-import TaskService from "../../services/TaskService";
+import PropTypes from "prop-types";
 
 export default function TodoInput({ handleAddNewTask }) {
-  {
-    const taskService = new TaskService();
+  const [inputValue, setInputValue] = useState("");
 
-    const [inputValue, setInputValue] = useState("");
+  const handleChange = (value) => {
+    setInputValue(value);
+  };
 
-    const handleChange = (value) => {
-      console.log(value);
-      setInputValue(value);
-    };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleAddNewTask(inputValue);
+      setInputValue("");
+    }
+  };
 
-    return (
-      <div className="add-new-container">
-        <input
-          type="text"
-          className="add-new-input"
-          placeholder="Write your new Todo"
-          onChange={(e) => handleChange(e.target.value)}
-        ></input>
-        <div className="pokeball add-new-button">
-          <button
-            className="pokeball__button"
-            onClick={() => handleAddNewTask(inputValue)}
-          ></button>
-        </div>
+  return (
+    <div className="add-new-container">
+      <input
+        type="text"
+        className="add-new-input"
+        placeholder="Write your new Todo"
+        onChange={(e) => handleChange(e.target.value)}
+        onKeyDown={(e) => handleKeyPress(e)}
+        value={inputValue}
+      ></input>
+      <div className="pokeball add-new-button">
+        <button
+          className="pokeball__button"
+          onClick={() => {
+            handleAddNewTask(inputValue);
+            setInputValue("");
+          }}
+        ></button>
       </div>
-    );
-  }
+    </div>
+  );
 }
+
+TodoInput.prototype = {
+  handleAddNewTask: PropTypes.func.isRequired,
+};

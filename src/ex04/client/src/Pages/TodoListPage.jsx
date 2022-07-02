@@ -3,19 +3,17 @@ import InputContainer from "../components/InputContainer/InputContainer";
 import TodoList from "../components/TodoList/TodoList";
 import TaskService from "../services/TaskService";
 import Simplert from "react-simplert";
-import { Button } from "monday-ui-react-core";
-import { Delete } from "monday-ui-react-core/dist/allIcons";
 import "./TodoListPage.css";
 import DeleteBtnsBar from "../components/DeleteBtnsBar/DeleteBtnsBar";
 
 const TodoListPage = () => {
   const taskService = new TaskService();
-
   const [tasks, setTasks] = useState([]);
   const [showAlreadyExistAlert, setShowAlreadyExistAlert] = useState(false);
+  const [showEditTaskAlert, setShowEditTaskAlert] = useState(false);
 
   const handleEdit = () => {
-    console.log("edit");
+    setShowEditTaskAlert(true);
   };
 
   const handleDeleteAll = async () => {
@@ -61,14 +59,21 @@ const TodoListPage = () => {
     <div>
       <h1>Todo List</h1>
       <Simplert
+        showSimplert={showEditTaskAlert}
+        onClose={() => setShowEditTaskAlert(false)}
+        type={"info"}
+        title={"Edit task is not available"}
+        message={"please upgrade verison :)"}
+      />
+      <Simplert
         showSimplert={showAlreadyExistAlert}
         onClose={() => setShowAlreadyExistAlert(false)}
         type={"info"}
-        width={"150%"}
         title={"Task already exist"}
         message={"please try to add another task"}
       />
       <InputContainer handleAddNewTask={handleAddNewTask}></InputContainer>
+
       <TodoList
         items={tasks}
         handleDoneTask={handleDoneTask}
