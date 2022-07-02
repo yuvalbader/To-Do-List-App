@@ -9,7 +9,7 @@ class ItemManager {
   getAllItems = async () => {
     try {
       return await Items.findAll({
-        attributes: ["id", "taskContent", "isDone", "done_timestamp"],
+        attributes: ["id", "taskContent", "isDone", "done_timestamp", "imgUrl"],
       });
     } catch (e) {
       throw e;
@@ -41,8 +41,9 @@ class ItemManager {
         return await this.fetchAndAddManyPokemon(item);
       }
 
-      await this.addItem({ task: item, isDone: false });
+      return await this.addItem({ task: item, isDone: false, imgUrl: "" });
     } catch (err) {
+      console.log("3", err);
       throw err;
     }
   };
@@ -55,7 +56,10 @@ class ItemManager {
       if (existingItem) {
         throw new Error("Item already exists");
       } else {
-        await Items.bulkCreate([{ taskContent: item.task, IsDone: false }]);
+        console.log("4", item);
+        await Items.bulkCreate([
+          { taskContent: item.task, IsDone: false, imgUrl: item.imgUrl },
+        ]);
       }
     } catch (e) {
       throw e;
@@ -98,10 +102,15 @@ class ItemManager {
   };
 
   addPokemonItem = async (pokemon) => {
-    await this.addItem({
-      task: `Catch ${pokemon.name}`,
-      isDone: false,
-    });
+    try {
+      await this.addItem({
+        task: `Catch ${pokemon.name}`,
+        isDone: false,
+        imgUrl: pokemon.sprites.front_default,
+      });
+    } catch (e) {
+      throw e;
+    }
   };
 
   fetchAndAddPokemon = async (pokemonId) => {
@@ -109,10 +118,15 @@ class ItemManager {
       const pokemon = await this.pokemonClient.getPokemon(pokemonId);
       await this.addPokemonItem(pokemon);
     } catch (error) {
-      await this.addItem({
-        task: `Pokemon with ID ${pokemonId} was not found`,
-        isDone: false,
-      });
+      if (error.message === "Failed to fetch pokemon") {
+        await this.addItem({
+          task: `Pokemon with ID ${pokemonId} was not found`,
+          isDone: false,
+          imgUrl: null,
+        });
+      } else {
+        throw error;
+      }
     }
   };
 
@@ -123,7 +137,7 @@ class ItemManager {
       );
       pokemons.forEach(this.addPokemonItem);
     } catch (error) {
-      console.error(error);
+      console.error("1", error);
       await this.addItem({
         task: `Failed to fetch pokemon with this input: ${inputValue}`,
         isDone: false,

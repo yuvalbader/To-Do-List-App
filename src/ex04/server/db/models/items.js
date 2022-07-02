@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       taskContent: DataTypes.STRING,
       IsDone: DataTypes.BOOLEAN,
       done_timestamp: DataTypes.DATE,
+      imgUrl: DataTypes.STRING,
     },
     {
       sequelize,

@@ -32,7 +32,7 @@ const addTask = async (req, res, next) => {
     await itemManager.handleItem(req.body.item);
     return res.status(200).send("Task added successfully");
   } catch (err) {
-    return res.status(410).send("Task already exists. please try again");
+    return res.status(430).send("Task already exists.");
   }
 };
 
@@ -46,7 +46,7 @@ const deleteTask = async (req, res, next) => {
 };
 
 const checboxClicked = async (req, res, next) => {
-  try { 
+  try {
     itemManager.handleCheckboxChange(req.body.taskId, req.body.doneTimestamp);
     return res.status(200).send("Task status changed successfully");
   } catch (err) {
