@@ -1,0 +1,13 @@
+.btns-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.delete-all-btn {
+  margin-left: -310px;
+  width: 200px;
+  bottom: 10px;
+}
