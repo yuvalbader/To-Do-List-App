@@ -1,32 +1,9 @@
-// const axios = require("axios").default;
-
-// class PokemonClient {
-//   constructor() {
-//     {
-//       https: this.baseUrl = "https://pokeapi.co/api/v2/pokemon/";
-//     }
-//   }
-
-//   async fetchPokemonsById(pokemonsArr) {
-//     const pokemons = await Promise.all(
-//       pokemonsArr.map(
-//         async (id) =>
-//           await axios.get(`${this.baseUrl}${id}`).catch((e) => {
-//             return e.response;
-//           })
-//       )
-//     );
-//     return pokemons;
-//   }
-// }
-
-// module.exports = new PokemonClient();
-
 const axios = require("axios");
+require("dotenv").config();
 
 class PokemonClient {
   constructor() {
-    this.API_URL = "https://pokeapi.co/api/v2/pokemon/";
+    this.API_URL = process.env.POKEMON_API_PATH;
   }
 
   async getPokemon(id) {

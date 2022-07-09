@@ -1,88 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+
 import InputContainer from "../components/InputContainer/InputContainer";
 import TodoList from "../components/TodoList/TodoList";
-import TaskService from "../services/TaskService";
-import Simplert from "react-simplert";
-import "./TodoListPage.css";
+import TodoFilter from "../components/TodoFilter/TodoFilter";
+import "monday-ui-react-core/dist/main.css";
+
 import DeleteBtnsBar from "../components/DeleteBtnsBar/DeleteBtnsBar";
+import { deleteAllTasksAction } from "../Redux/actions/tasksActions";
+import "./TodoListPage.css";
 
-const TodoListPage = () => {
-  const taskService = new TaskService();
-  const [tasks, setTasks] = useState([]);
-  const [showAlreadyExistAlert, setShowAlreadyExistAlert] = useState(false);
-  const [showEditTaskAlert, setShowEditTaskAlert] = useState(false);
-
-  const handleEdit = () => {
-    setShowEditTaskAlert(true);
-  };
-
-  const handleDeleteAll = async () => {
-    await taskService.deleteAllItems();
-    setTasks([]);
-  };
-
-  const getAllTasks = async () => {
-    const tasks = await taskService.getAllTasks();
-    setTasks(tasks);
-  };
-
-  const handleDelete = async (id) => {
-    setTasks(tasks.filter((task) => task.id !== id));
-    await taskService.deleteTask(id);
-  };
-
-  const handleDoneTask = async (id) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, isDone: !task.isDone } : task
-      )
-    );
-    await taskService.checboxClicked(id);
-  };
-
-  const handleAddNewTask = async (inputValue) => {
-    try {
-      const alreadyExist = await taskService.addTask(inputValue);
-      setShowAlreadyExistAlert(alreadyExist);
-      getAllTasks();
-    } catch (e) {
-      console.log(e);
-    }
-    console.log(`add new task ${inputValue}`);
-  };
-
-  useEffect(() => {
-    getAllTasks();
-  }, []);
-
+function TodoListPage(props) {
   return (
     <div>
       <h1>Todo List</h1>
-      <Simplert
-        showSimplert={showEditTaskAlert}
-        onClose={() => setShowEditTaskAlert(false)}
-        type={"info"}
-        title={"Edit task is not available"}
-        message={"please upgrade verison :)"}
-      />
-      <Simplert
-        showSimplert={showAlreadyExistAlert}
-        onClose={() => setShowAlreadyExistAlert(false)}
-        type={"info"}
-        title={"Task already exist"}
-        message={"please try to add another task"}
-      />
-      <InputContainer handleAddNewTask={handleAddNewTask}></InputContainer>
 
-      <TodoList
-        items={tasks}
-        handleDoneTask={handleDoneTask}
-        handleDelete={handleDelete}
-        handleEdit={handleEdit}
-      ></TodoList>
-      <DeleteBtnsBar handleDeleteAll={handleDeleteAll}></DeleteBtnsBar>
+      <InputContainer></InputContainer>
+      <TodoFilter></TodoFilter>
+      <TodoList></TodoList>
+      <DeleteBtnsBar handleDeleteAll={props.deleteAllTasks}></DeleteBtnsBar>
     </div>
   );
+}
+
+const mapStateToProps = (state) => {
+  return {
+    tasks: state.itemsEntities.tasks,
+  };
 };
 
-export default TodoListPage;
+const mapDispatchToProps = (dispatch) => ({
+  deleteAllTasks: () => dispatch(deleteAllTasksAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoListPage);
