@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import "./InputContainer.css";
 import "./pokeball.css";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addTasksAction } from "../../Redux/actions/tasksActions";
 import { Circles } from "react-loader-spinner";
-import Simplert from "react-simplert";
+import { Loader } from "monday-ui-react-core";
 
 function TodoInput(props) {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [showErrorAlert, setShowErrorAlert] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (value) => {
     setInputValue(value);
@@ -26,13 +23,6 @@ function TodoInput(props) {
 
   return (
     <div className="add-new-container">
-      <Simplert
-        showSimplert={showErrorAlert}
-        onClose={() => setShowErrorAlert(false)}
-        type={"info"}
-        title={errorMessage}
-        message={"please try again"}
-      />
       <input
         type="text"
         className="add-new-input"
@@ -40,19 +30,18 @@ function TodoInput(props) {
         onChange={(e) => handleChange(e.target.value)}
         value={inputValue}
       ></input>
-      {isLoading && <Circles ariaLabel="loading-indicator" />}
+      {isLoading && <Loader size={40}></Loader>}
       {!isLoading && (
         <div className="pokeball add-new-button">
           <button
             className="pokeball__button"
             onClick={() => {
-              try {
-                props.addTasks(inputValue);
-                setInputValue("");
-              } catch (error) {
-                setShowErrorAlert(true);
-                setErrorMessage(error.message);
-              }
+              props.addTasks(inputValue);
+              setInputValue("");
+              setIsLoading(true);
+              setTimeout(() => {
+                setIsLoading(false);
+              }, 1000);
             }}
           ></button>
         </div>

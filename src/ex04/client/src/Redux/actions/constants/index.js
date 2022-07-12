@@ -10,6 +10,7 @@ const ACTIONS = {
     SHOW_COMPLETED: "SHOW_COMPLETED",
     SHOW_ACTIVE: "SHOW_ACTIVE",
   },
+  RESET_ERROR: "RESET_ERROR",
 };
 
 export default ACTIONS;

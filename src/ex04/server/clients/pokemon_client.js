@@ -13,7 +13,6 @@ class PokemonClient {
 
       return pokemon;
     } catch (error) {
-      console.error(error);
       throw new Error("Failed to fetch pokemon");
     }
   }

@@ -70,6 +70,16 @@ export const setVisabilityAction = (filter) => {
   }
 };
 
+export const resetErrorAction = () => {
+  try {
+    return (dispatch) => {
+      dispatch(resetError());
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
 const toggleTaskStatus = (taskId) => {
   return {
     type: actionTypes.TOGGLE_TASK_STATUS,
@@ -80,6 +90,12 @@ const toggleTaskStatus = (taskId) => {
 const deleteAllTasks = () => {
   return {
     type: actionTypes.DELETE_ALL_TASKS,
+  };
+};
+
+const resetError = () => {
+  return {
+    type: actionTypes.RESET_ERROR,
   };
 };
 
@@ -98,10 +114,14 @@ const deleteTask = (taskContent) => {
 };
 
 const addTask = (newTasks) => {
-  return {
-    type: actionTypes.ADD_TASK,
-    payload: newTasks,
-  };
+  try {
+    return {
+      type: actionTypes.ADD_TASK,
+      payload: newTasks,
+    };
+  } catch (error) {
+    throw error;
+  }
 };
 
 const setVisability = (filter) => {

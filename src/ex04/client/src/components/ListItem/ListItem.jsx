@@ -6,15 +6,11 @@ import {
   deleteTaskAction,
 } from "../../Redux/actions/tasksActions";
 
-
 import "../../components/ListItem/ListItem.css";
 
 function ListItem(props) {
-    
   return (
     <div>
-   
-
       <li className="list-group-item d-flex justify-content-between my-2">
         <Avatar
           size={Avatar.sizes.SMALL}

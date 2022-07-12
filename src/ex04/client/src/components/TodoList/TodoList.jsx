@@ -1,15 +1,15 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import ListItem from "../ListItem/ListItem";
-import "../TodoList/TodoList.css";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+
+import ListItem from "../ListItem/ListItem";
 import { getTasksAction } from "../../Redux/actions/tasksActions";
 import { Search } from "monday-ui-react-core";
+import "../TodoList/TodoList.css";
+
 
 function TodoList(props) {
   const { handleEdit } = props;
-
   const [tasksToShow, setTasksToShow] = useState([]);
 
   const setTasksToShowByVisibilityFilter = () => {
@@ -36,7 +36,7 @@ function TodoList(props) {
   return (
     <div className="todo-list-container">
       <Search
-        size= "SIZES.SMALL"
+        className="search_bar"
         placeholder="Search your todo"
         onChange={(value) => {
           setTasksToShow(

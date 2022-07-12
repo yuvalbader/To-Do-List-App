@@ -28,7 +28,7 @@ class ItemManager {
       const newItem = await this.addItem({
         task: item,
         isDone: false,
-        imgUrl: "https://thumbs.dreamstime.com/b/sticky-todo-11106198.jpg",
+        imgUrl: process.env.TODO_IMG,
       });
       return newItem;
     } catch (err) {
@@ -96,7 +96,7 @@ class ItemManager {
         imgUrl: pokemon.sprites.front_default,
       });
     } catch (e) {
-      throw new Error("An error occured while adding pokemon to the list", ex);
+      throw e;
     }
   };
 
@@ -110,11 +110,11 @@ class ItemManager {
         const newItem = await this.addItem({
           task: `Pokemon with ID ${pokemonId} was not found`,
           isDone: false,
-          imgUrl: img,
+          imgUrl: process.env.POKEMON_NOT_FOUND_IMG,
         });
         return newItem;
       } else {
-        throw new Error("An error occurred while fetching pokemon");
+        throw error;
       }
     }
   };
@@ -125,13 +125,16 @@ class ItemManager {
         inputValue.replace("/ /g", "").split(",")
       );
 
-      const result = await pokemons.map(await this.addPokemonItem);
+      const result = await Promise.all(
+        pokemons.map((pokemon) => this.addPokemonItem(pokemon))
+      );
 
-      return result;
+      return result.flat();
     } catch (error) {
       await this.addItem({
         task: `Failed to fetch pokemon with this input: ${inputValue}`,
         isDone: false,
+        imgUrl: process.env.POKEMON_NOT_FOUND_IMG,
       });
     }
   };

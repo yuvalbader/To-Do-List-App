@@ -3,6 +3,7 @@ import actionTypes from "../actions/constants/index";
 const initialState = {
   tasks: [],
   visibilityFilter: "SHOW_ALL",
+  error: null,
 };
 
 const itemsEntitiesReducer = (state = initialState, action) => {
@@ -14,17 +15,31 @@ const itemsEntitiesReducer = (state = initialState, action) => {
           tasks: action.payload,
         };
       } catch (error) {
-        throw new Error("An error occured while getting all tasks");
+        return {
+          ...state,
+          error: {
+            message: error.message,
+          },
+        };
       }
 
     case actionTypes.ADD_TASK:
       try {
+        if (!action.payload["error"]) {
+          return {
+            ...state,
+            tasks: [...state.tasks, ...action.payload],
+          };
+        } else {
+          throw new Error(action.payload["error"]);
+        }
+      } catch (error) {
         return {
           ...state,
-          tasks: [...state.tasks, ...action.payload],
+          error: {
+            message: error.message,
+          },
         };
-      } catch (error) {
-        throw new Error("An error occured while adding a task");
       }
 
     case actionTypes.DELETE_TASK:
@@ -36,7 +51,12 @@ const itemsEntitiesReducer = (state = initialState, action) => {
           ),
         };
       } catch (error) {
-        throw new Error("An error occured while deleting a task");
+        return {
+          ...state,
+          error: {
+            message: error.message,
+          },
+        };
       }
 
     case actionTypes.DELETE_ALL_TASKS:
@@ -46,7 +66,12 @@ const itemsEntitiesReducer = (state = initialState, action) => {
           tasks: [],
         };
       } catch (error) {
-        throw new Error("An error occured while deleting all tasks");
+        return {
+          ...state,
+          error: {
+            message: error.message,
+          },
+        };
       }
 
     case actionTypes.TOGGLE_TASK_STATUS:
@@ -61,7 +86,12 @@ const itemsEntitiesReducer = (state = initialState, action) => {
           }),
         };
       } catch (error) {
-        throw new Error("An error occured while toggling a task status");
+        return {
+          ...state,
+          error: {
+            message: error.message,
+          },
+        };
       }
 
     case actionTypes.SET_VISIBILITY_FILTER:
@@ -71,7 +101,27 @@ const itemsEntitiesReducer = (state = initialState, action) => {
           visibilityFilter: action.payload,
         };
       } catch (error) {
-        throw new Error("An error occured while setting the visibility filter");
+        return {
+          ...state,
+          error: {
+            message: error.message,
+          },
+        };
+      }
+
+    case actionTypes.RESET_ERROR:
+      try {
+        return {
+          ...state,
+          error: null,
+        };
+      } catch (error) {
+        return {
+          ...state,
+          error: {
+            message: error.message,
+          },
+        };
       }
 
     default:
