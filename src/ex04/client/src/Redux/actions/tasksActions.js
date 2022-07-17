@@ -7,6 +7,7 @@ export const getTasksAction = () => {
   try {
     return async (dispatch) => {
       const tasks = await taskService.getAllTasks();
+      console.log(tasks);
       dispatch(getAllTasks(tasks));
     };
   } catch (error) {
@@ -80,40 +81,40 @@ export const resetErrorAction = () => {
   }
 };
 
-const toggleTaskStatus = (taskId) => {
+export const toggleTaskStatus = (taskId) => {
   return {
     type: actionTypes.TOGGLE_TASK_STATUS,
     payload: taskId,
   };
 };
 
-const deleteAllTasks = () => {
+export const deleteAllTasks = () => {
   return {
     type: actionTypes.DELETE_ALL_TASKS,
   };
 };
 
-const resetError = () => {
+export const resetError = () => {
   return {
     type: actionTypes.RESET_ERROR,
   };
 };
 
-const getAllTasks = (tasks) => {
+export const getAllTasks = (tasks) => {
   return {
     type: actionTypes.GET_ALL_TASKS,
     payload: tasks,
   };
 };
 
-const deleteTask = (taskContent) => {
+export const deleteTask = (taskContent) => {
   return {
     type: actionTypes.DELETE_TASK,
     payload: taskContent,
   };
 };
 
-const addTask = (newTasks) => {
+export const addTask = (newTasks) => {
   try {
     return {
       type: actionTypes.ADD_TASK,
@@ -124,7 +125,7 @@ const addTask = (newTasks) => {
   }
 };
 
-const setVisability = (filter) => {
+export const setVisability = (filter) => {
   return {
     type: actionTypes.SET_VISIBILITY_FILTER,
     payload: filter,

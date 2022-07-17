@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render correctly listItem of this task 1`] = `
+<div>
+  <li
+    className="list-group-item d-flex justify-content-between my-2"
+    data-testid="item-1"
+  >
+    <div
+      className="monday-style-avatar monday-style-avatar--small"
+      style={Object {}}
+    >
+      <div
+        aria-hidden={false}
+        className="monday-style-avatar_circle monday-style-avatar_circle--img"
+        style={Object {}}
+        tabIndex={0}
+      >
+        <img
+          className="monday-style-avatar-content_img monday-style-avatar-content_img--small"
+          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+        />
+      </div>
+    </div>
+    <h6
+      className="test   "
+    >
+      catch picatch
+    </h6>
+    <div
+      className="todo-icon px-1 "
+    >
+      <span
+        className="mx-2 text-secondary"
+        onClick={[Function]}
+      >
+        <i
+          className="far fa-square"
+        />
+      </span>
+      <span
+        className="mx-2 text-warning"
+      >
+        <i
+          className="fas fa-pen"
+        />
+      </span>
+      <span
+        className="mx-2 text-danger"
+        onClick={[Function]}
+      >
+        <i
+          className="fas fa-trash"
+        />
+      </span>
+    </div>
+  </li>
+</div>
+`;

@@ -7,7 +7,6 @@ import { getTasksAction } from "../../Redux/actions/tasksActions";
 import { Search } from "monday-ui-react-core";
 import "../TodoList/TodoList.css";
 
-
 function TodoList(props) {
   const { handleEdit } = props;
   const [tasksToShow, setTasksToShow] = useState([]);

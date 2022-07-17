@@ -11,7 +11,10 @@ import "../../components/ListItem/ListItem.css";
 function ListItem(props) {
   return (
     <div>
-      <li className="list-group-item d-flex justify-content-between my-2">
+      <li
+        className="list-group-item d-flex justify-content-between my-2"
+        data-testid={`item-${props.item.id}`}
+      >
         <Avatar
           size={Avatar.sizes.SMALL}
           src={props.item.imgUrl}
