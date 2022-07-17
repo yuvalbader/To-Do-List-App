@@ -33,6 +33,7 @@ describe("ListContainer", () => {
     const dogTodo = screen.getByTestId(`item-${items[0].itemId}`);
     expect(dogTodo).toBeInTheDocument();
     expect(dogTodo).toHaveClass("fa-square");
+    
 
     const dishesTodo = screen.getByTestId(`item-${items[1].itemId}`);
     expect(dishesTodo).toBeInTheDocument();
