@@ -12,23 +12,7 @@ class ItemManager {
         attributes: ["id", "taskContent", "isDone", "done_timestamp", "imgUrl"],
       });
     } catch (e) {
-      throw e;
-    }
-  };
-
-  getDoneItems = async () => {
-    try {
-      return await Items.findAll({ where: { isDone: true } });
-    } catch (err) {
-      throw e;
-    }
-  };
-
-  getUnDoneItems = async () => {
-    try {
-      return await Items.findAll({ where: { isDone: false } });
-    } catch (err) {
-      throw e;
+      throw new Error("An error occurred while getting all items");
     }
   };
 
@@ -41,9 +25,13 @@ class ItemManager {
         return await this.fetchAndAddManyPokemon(item);
       }
 
-      return await this.addItem({ task: item, isDone: false, imgUrl: "" });
+      const newItem = await this.addItem({
+        task: item,
+        isDone: false,
+        imgUrl: process.env.TODO_IMG,
+      });
+      return newItem;
     } catch (err) {
-      console.log("3", err);
       throw err;
     }
   };
@@ -56,8 +44,7 @@ class ItemManager {
       if (existingItem) {
         throw new Error("Item already exists");
       } else {
-        console.log("4", item);
-        await Items.bulkCreate([
+        return await Items.bulkCreate([
           { taskContent: item.task, IsDone: false, imgUrl: item.imgUrl },
         ]);
       }
@@ -88,7 +75,7 @@ class ItemManager {
         await Items.update({ done_timestamp: null }, { where: { id: id } });
       }
     } catch (e) {
-      console.log(e);
+      throw e;
     }
   };
 
@@ -97,13 +84,13 @@ class ItemManager {
       const newVal = await this.toggleTaskStatus(id);
       this.setDoneTimestamp(id, newVal, doneTimestamp);
     } catch (e) {
-      throw e;
+      throw new Error("An error occured while handling checkbox change");
     }
   };
 
   addPokemonItem = async (pokemon) => {
     try {
-      await this.addItem({
+      return await this.addItem({
         task: `Catch ${pokemon.name}`,
         isDone: false,
         imgUrl: pokemon.sprites.front_default,
@@ -116,14 +103,16 @@ class ItemManager {
   fetchAndAddPokemon = async (pokemonId) => {
     try {
       const pokemon = await this.pokemonClient.getPokemon(pokemonId);
-      await this.addPokemonItem(pokemon);
+      const newItem = await this.addPokemonItem(pokemon);
+      return newItem;
     } catch (error) {
       if (error.message === "Failed to fetch pokemon") {
-        await this.addItem({
+        const newItem = await this.addItem({
           task: `Pokemon with ID ${pokemonId} was not found`,
           isDone: false,
-          imgUrl: img,
+          imgUrl: process.env.POKEMON_NOT_FOUND_IMG,
         });
+        return newItem;
       } else {
         throw error;
       }
@@ -135,21 +124,26 @@ class ItemManager {
       const pokemons = await this.pokemonClient.getManyPokemon(
         inputValue.replace("/ /g", "").split(",")
       );
-      pokemons.forEach(this.addPokemonItem);
+
+      const result = await Promise.all(
+        pokemons.map((pokemon) => this.addPokemonItem(pokemon))
+      );
+
+      return result.flat();
     } catch (error) {
-      console.error("1", error);
       await this.addItem({
         task: `Failed to fetch pokemon with this input: ${inputValue}`,
         isDone: false,
+        imgUrl: process.env.POKEMON_NOT_FOUND_IMG,
       });
     }
   };
 
-  deleteItem = async (id) => {
+  deleteItem = async (taskContent) => {
     try {
-      await Items.destroy({ where: { id } });
+      await Items.destroy({ where: { taskContent } });
     } catch (e) {
-      console.log(e);
+      throw new Error("An error occurred while deleting item");
     }
   };
 
@@ -157,7 +151,7 @@ class ItemManager {
     try {
       await Items.destroy({ where: {} });
     } catch (e) {
-      console.log(e);
+      throw new Error("An error occurred when deleting all items");
     }
   };
 

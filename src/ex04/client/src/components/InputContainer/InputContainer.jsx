@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import "./InputContainer.css";
 import "./pokeball.css";
-import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { addTasksAction } from "../../Redux/actions/tasksActions";
+import { Circles } from "react-loader-spinner";
+import { Loader } from "monday-ui-react-core";
 
-export default function TodoInput({ handleAddNewTask }) {
+function TodoInput(props) {
   const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (value) => {
     setInputValue(value);
@@ -12,7 +16,7 @@ export default function TodoInput({ handleAddNewTask }) {
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      handleAddNewTask(inputValue);
+      props.addTasksAction(inputValue);
       setInputValue("");
     }
   };
@@ -24,22 +28,26 @@ export default function TodoInput({ handleAddNewTask }) {
         className="add-new-input"
         placeholder="Write your new Todo"
         onChange={(e) => handleChange(e.target.value)}
-        onKeyDown={(e) => handleKeyPress(e)}
         value={inputValue}
       ></input>
-      <div className="pokeball add-new-button">
-        <button
-          className="pokeball__button"
-          onClick={() => {
-            handleAddNewTask(inputValue);
-            setInputValue("");
-          }}
-        ></button>
-      </div>
+      {isLoading && <Loader size={40}></Loader>}
+      {!isLoading && (
+        <div className="pokeball add-new-button">
+          <button
+            className="pokeball__button"
+            onClick={() => {
+              props.addTasks(inputValue);
+              setInputValue("");
+            }}
+          ></button>
+        </div>
+      )}
     </div>
   );
 }
 
-TodoInput.prototype = {
-  handleAddNewTask: PropTypes.func.isRequired,
-};
+const mapDispatchToProps = (dispatch) => ({
+  addTasks: (task) => dispatch(addTasksAction(task)),
+});
+
+export default connect(null, mapDispatchToProps)(TodoInput);

@@ -9,28 +9,11 @@ class TaskService {
         method: "GET",
         headers: {
           accept: "application/json",
+          "Content-Type": "application/json",
         },
       });
       const tasks = await response.json();
       return tasks;
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  async getTasksByStatus(status) {
-    try {
-      var endpoint = "";
-
-      if (status === "Done") {
-        endpoint = `/getDoneTasks`;
-      } else if (status === "UnDone") {
-        endpoint = `/getUnDoneTasks`;
-      }
-
-      const tasks = await fetch(endpoint);
-      const response = await tasks.json();
-      return response;
     } catch (e) {
       console.log(e);
     }
@@ -43,18 +26,15 @@ class TaskService {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ item: taskContent }),
       });
-
-      if (response.status === 430) {
-        return true;
-      }
-
-      return false;
+      const tasks = await response.json();
+      return tasks;
     } catch (e) {
+      console.log(e);
       throw e;
     }
   }
 
-  async deleteTask(taskId) {
+  async deleteTask(taskContent) {
     try {
       await fetch(`/deleteTask`, {
         method: "DELETE",
@@ -62,7 +42,7 @@ class TaskService {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ taskId: taskId }),
+        body: JSON.stringify({ taskContent: taskContent }),
       });
     } catch (e) {
       console.log(e);
